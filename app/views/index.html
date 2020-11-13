@@ -1,0 +1,15 @@
+
+
+{% extends "layout.html" %}
+
+{% block content %}
+{{data}}
+
+<form action="/test/index/add" method="POST">
+	username:<input type="text" name="username"><br />
+	password:<input type="password" name="password"><br />
+	<input type="submit" value="submit">
+</form>
+
+{% endblock %}
+
