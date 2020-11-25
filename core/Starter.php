@@ -64,16 +64,16 @@ class Starter
 		$path = APP.'/views/'.$file;
 		//p($path);
 		if(is_file($path)){
-			//extract($this->assign);
+			extract($this->assign);
 
-			$loader = new \Twig\Loader\FilesystemLoader(APP.'/views/');
+			/*$loader = new \Twig\Loader\FilesystemLoader(APP.'/views/');
 			$twig = new \Twig\Environment($loader, [
 			    'cache' => ROOT_PATH.'/log/twig',
     			'debug' => true
 			]);
 			$template = $twig->load($file);
-			$template->display($this->assign?$this->assign:array());
-			//include $path;
+			$template->display($this->assign?$this->assign:array());*/
+			include $path;
 		}
 	}
 }

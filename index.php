@@ -11,6 +11,7 @@
 	define('ROOT_PATH', realpath('./'));
 	define('CORE', ROOT_PATH.'/core');
 	define('APP', ROOT_PATH.'/app');
+	define('UPLOAD', ROOT_PATH.'/public/img/');
 
 	define('MODULE', 'app');
 	define('PROJECT', '/lol/');

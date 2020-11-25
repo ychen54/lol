@@ -3,10 +3,8 @@ namespace app\model;
 
 use \core\lib\Model;
 
-
-
 class UserModel extends Model{
-	public $table = 'Users';
+	public $table = 'users';
 	public function lists(){
 		$ret = $this->select($this->table, '*');
 		return $ret;
@@ -17,6 +15,11 @@ class UserModel extends Model{
 		return $res;
 	}
 
+	public function addOne($data){
+		$res = $this->insert($this->table,$data);
+		return $this->id();
+	}
+
 	public function setOne($id, $data){
 		$re = $this->update($this->table,$data,array('uid'=>$id));
 		return $re->rowCount();
@@ -25,6 +28,11 @@ class UserModel extends Model{
 	public function deleteOne($id){
 		$re = $this->delete($this->table,array('uid'=>$id));
 		return $re->rowCount();
+	}
+
+	public function getOneByEmail($email){
+		$res = $this->get($this->table,'*',array('email'=>$email));
+		return $res;
 	}
 }
 

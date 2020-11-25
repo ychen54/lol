@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* hello.html */
-class __TwigTemplate_27117268196fe510aa5e023241315b578dc233b3780ccada2e7928ae28222d10 extends \Twig\Template
+/* index.php */
+class __TwigTemplate_bff5802053c2cb96becdb7c9e2cb0e60225cfee48cc131a87180c9b8389a1940 extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -32,13 +32,13 @@ class __TwigTemplate_27117268196fe510aa5e023241315b578dc233b3780ccada2e7928ae282
     protected function doGetParent(array $context)
     {
         // line 1
-        return "layout.html";
+        return "layout.php";
     }
 
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("layout.html", "hello.html", 1);
+        $this->parent = $this->loadTemplate("layout.php", "index.php", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -47,16 +47,20 @@ class __TwigTemplate_27117268196fe510aa5e023241315b578dc233b3780ccada2e7928ae282
     {
         $macros = $this->macros;
         // line 4
+        echo "
+<p align='center' > This is index page </p>
+";
+        // line 6
         echo twig_escape_filter($this->env, ($context["data"] ?? null), "html", null, true);
         echo "
-hello
+
 
 ";
     }
 
     public function getTemplateName()
     {
-        return "hello.html";
+        return "index.php";
     }
 
     public function isTraitable()
@@ -66,17 +70,21 @@ hello
 
     public function getDebugInfo()
     {
-        return array (  50 => 4,  46 => 3,  35 => 1,);
+        return array (  54 => 6,  50 => 4,  46 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("{% extends \"layout.html\" %}
+        return new Source("{% extends \"layout.php\" %}
 
 {% block content %}
-{{data}}
-hello
 
-{% endblock %}", "hello.html", "D:\\wamp64\\www\\test\\app\\views\\hello.html");
+<p align='center' > This is index page </p>
+{{ data}}
+
+
+{% endblock %}
+
+", "index.php", "D:\\wamp64\\www\\lol\\app\\views\\index.php");
     }
 }
