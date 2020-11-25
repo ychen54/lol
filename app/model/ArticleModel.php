@@ -11,7 +11,7 @@ class ArticleModel extends Model{
 	}
 
 	public function getOne($id){
-		$res = $this->get($this->table,'*',array('image_no'=>$id));
+		$res = $this->get($this->table,'*',array('article_no'=>$id));
 		return $res;
 	}
 	public function addOne($data){
@@ -20,12 +20,12 @@ class ArticleModel extends Model{
 	}
 
 	public function setOne($id, $data){
-		$re = $this->update($this->table,$data,array('image_no'=>$id));
+		$re = $this->update($this->table,$data,array('article_no'=>$id));
 		return $re->rowCount();
 	}
 
 	public function deleteOne($id){
-		$re = $this->delete($this->table,array('image_no'=>$id));
+		$re = $this->delete($this->table,array('article_no'=>$id));
 		return $re->rowCount();
 	}
 

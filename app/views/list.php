@@ -1,4 +1,4 @@
-<div class="container pull-left" style="width: 300px;margin-left: 10%; height: auto;"> 
+<div class="container pull-left" style="width: 200px;margin-left: 10%; height: auto;"> 
             <div class="list-group">
                 <a href="#" style="font-weight: bolder;" class="list-group-item list-group-item-info">
                     Admin Page

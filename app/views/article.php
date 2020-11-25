@@ -8,7 +8,7 @@
     <link rel='stylesheet' href='/lol/public/css/common.css' type='text/css'>
     <script type='text/javascript' src='/lol/vendor/components/jquery/jquery.min.js'></script>
     <script type='text/javascript' src='/lol/vendor/twbs/bootstrap/dist/js/bootstrap.js'></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/kbmyjp3adjjbedy22k9b8ez9xo8gv68853z8q3ir0x683vj8/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script type='text/javascript' src='/lol/public/js/common.js'></script>
     <title>
         <?php echo $title; ?>

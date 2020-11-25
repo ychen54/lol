@@ -16,7 +16,7 @@
     <?php include 'nav.php'; ?>
     <div class="contaniner" style="min-height: 600px;">
         <?php include 'list.php'; ?>
-        <div class="container pull-left" style="width: 800px; height: auto;">
+        <div class="container pull-left" style="width: 1000px; height: auto;">
             <ol class="breadcrumb">
                 <li><a href="/lol/admin/index">Home</a></li>
                 <li class="active">Article List</li>
@@ -43,13 +43,13 @@
                           <td><?php echo $v['title'];; ?></td>
                           <td><?php echo $v['cate_name']; ?></td>
                           <td><?php echo $v['click']; ?></td>
-                          <td><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirm";} ?></td>
+                          <td id="verify<?php echo $v['article_no']; ?>"><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirmed";} ?></td>
                           <td><?php echo $v['create_time']; ?></td>
                           <td>
                             <button class="btn btn-primary btn-sm">Edit</button>
                             <button class="btn btn-warning btn-sm">Delete</button>
                             <?php if($_SESSION['type'] == 'admin'): ?>
-                                <button class="btn btn-success btn-sm">confirm</button>
+                                <button data-id="<?php echo $v['article_no']; ?>" class="btn btn-success btn-sm confirm">confirm</button>
                             <?php endif; ?>
                           </td>
                         </tr>
@@ -64,6 +64,32 @@
 
     <?php include 'footer.php';include 'message.php'; ?>
 </body>
+
+    <script type="text/javascript">
+        $(function(){
+            $(".confirm").click(function(){
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "post",
+                    url: "/lol/super/confirm",
+                    async: false,
+                    data: { "id": id},
+                    success: function(data) {
+                        var a = $.parseJSON(data);
+                        if (a.code == 1) {
+                            show_msg("success", a.msg);
+                            disMsgDelay(3000);
+                            $("#verify"+id).text("confirmed");
+                        }else{
+                            show_msg("error", a.msg);
+                            disMsgDelay(3000);
+                        }
+                    }
+                });
+            });
+        })
+
+    </script>
 
 </html>
 
