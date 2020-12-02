@@ -35,7 +35,7 @@
 					    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $row['cate_name'];?> <span class="caret"></span></a>
 					        <ul class="dropdown-menu">
 					         	<?php $sql1 = 'SELECT * from categories WHERE parent_id='.$row['cate_id'];foreach($dbh->query($sql1) as $row): ?>
-					          		<li><a href="#"><?php $cate[$row['cate_id']]=$row['cate_name'];echo $row['cate_name'];?></a></li>
+					          		<li><a href="/lol/index/category/id/<?php echo $row['cate_id'];?>"><?php $cate[$row['cate_id']]=$row['cate_name'];echo $row['cate_name'];?></a></li>
 					          	<?php endforeach; ?>
 					        </ul>
 					    </li>
@@ -43,7 +43,7 @@
 				</ul>
             	
             	<form class="navbar-form navbar-left" action="#" method="POST">
-            		<select class="form-control">
+            		<select class="form-control" name="cate_id">
             			<option value="">All category</option>
             			<?php foreach($cate as $k=>$row): ?>
             				<option value="<?php echo$k; ?>"><?php echo $row; ?></option>

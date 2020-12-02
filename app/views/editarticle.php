@@ -23,11 +23,10 @@
             <ol class="breadcrumb">
                 <li><a href="/lol/admin/index">Home</a></li>
                 <li class=""><a href="/lol/admin/index">Article List</a></li>
-                <li class="active"><?php echo $title; ?></li>
+                <li class="active">New Article</li>
             </ol>
-            <form class="form-horizontal" style="margin-left: -120px;" action="/lol/admin/<?php if(isset($data)){echo "editAricleSubmit";}else{echo "addArticle";} ?>" method="POST" id="form" enctype="multipart/form-data">
+            <form class="form-horizontal" style="margin-left: -120px;" action="/lol/admin/addArticle" method="POST" id="form" enctype="multipart/form-data">
                 <div class="form-group">
-                    <?php if(isset($data)){echo '<input type="hidden" name="article_no" value="'.$data["article_no"].' " />"'; } ?>
                     <label for="title" class="col-sm-3 control-label">Category</label>
                     <div class="col-sm-3">
                         <select class="form-control" id="parent">
@@ -47,9 +46,7 @@
                 <div class="form-group">
                     <label for="title" class="col-sm-3 control-label">Title</label>
                     <div class="col-sm-9">
-
-                        <input type="text" class="form-control" name="title" id="title" placeholder="title"
-                         value="<?php if(isset($data)){echo $data['title'];} ?>">
+                        <input type="text" class="form-control" name="title" id="title" placeholder="title">
                         <span id="warn-title" style="color:red;display:none;">title can't be empty</span>
                     </div>
                 </div>
@@ -57,7 +54,7 @@
                     <label for="content" class="col-sm-3 control-label">Content</label>
                     <div class="col-sm-9">
                       <textarea rows="20" cols="80" id="content" name="content">
-                        <?php if(isset($data)){echo $data['content'];} ?> 
+                                
                       </textarea>
                       <span id="warn-content" style="color:red;display:none;">Content can't be empty</span>
                     </div>
@@ -65,7 +62,7 @@
                 <div class="form-group">
                     <label for="prelink" class="col-sm-3 control-label">Permalink</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="prelink" id="prelink" placeholder="prelink" value="<?php if(isset($data)){echo $data['prelink'];} ?>">
+                        <input type="text" class="form-control" name="prelink" id="prelink" placeholder="prelink">
                         <span id="warn-prelink" style="color:red;display:none;">Permalink can't be empty</span>
                     </div>
                 </div>
@@ -75,7 +72,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-8">
-                    <button type="button" id="sub" class="btn btn-success" style="height: 30px;">Submit</button>
+                    <button type="button" id="sub" class="btn btn-success" style="height: 30px;">Create</button>
                   </div>
                 </div>
             </form>
@@ -90,6 +87,7 @@
         selector: 'textarea'
       });
       $("#sub").click(function() {
+        $("#form").submit();
         var title = $("#title").val();
         var prelink = $("#prelink").val();
         if (title == null || title == undefined || title == "" ) {
@@ -104,7 +102,7 @@
         } else {
             $("#warn-prelink").css("display", "none");
         }
-        $("#form").submit();
+        
     });
 
       $("#parent").change(function(){

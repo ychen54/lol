@@ -32,7 +32,7 @@
                           <th>Category</th>
                           <th>Click</th>
                           <th>verify</th>
-                          <th>createTime</th>
+                          <th>Create Time</th>
                           <th>Operation</th>
                         </tr>
                     </thead>
@@ -46,8 +46,8 @@
                           <td id="verify<?php echo $v['article_no']; ?>"><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirmed";} ?></td>
                           <td><?php echo $v['create_time']; ?></td>
                           <td>
-                            <button class="btn btn-primary btn-sm">Edit</button>
-                            <button class="btn btn-warning btn-sm">Delete</button>
+                            <a href="/lol/admin/editArticle/id/<?php echo $v['article_no']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="/lol/admin/deleteArticle/id/<?php echo $v['article_no']; ?>" class="btn btn-warning btn-sm">Delete</a>
                             <?php if($_SESSION['type'] == 'admin'): ?>
                                 <button data-id="<?php echo $v['article_no']; ?>" class="btn btn-success btn-sm confirm">confirm</button>
                             <?php endif; ?>

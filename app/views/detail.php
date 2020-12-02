@@ -29,7 +29,7 @@
 			<ol class="breadcrumb">
 				<span class="pull-right">Current Router</span>
 				<li><a href="/lol/index/index">Home</a></li>
-                <li class="active">Article Detail</li>
+        <li class="active">Article Detail</li>
             </ol>
            	<hr>
            	<?php ?>
@@ -40,8 +40,8 @@
            		<span class="pull-right">Click:<?php echo $article[0]['click']; ?></span></h5>
            	<hr>
            	<?php echo $article[0]['content']; ?>
-           	<?php if($article[0]['image_path'] != ''): ?>
-           		<img style="max-width: 1000px;" src="/lol/public/img/<?php echo $article[0]['image_path']; ?>">
+           	<?php if($article[0]['resize_path'] != ''): ?>
+           		<img style="max-width: 1000px;" src="/lol/public/img/<?php echo $article[0]['resize_path']; ?>">
            	<?php endif; ?>
            	<hr>
            	<h5>Author:<mark><?php echo $article[0]['nick_name']; ?></mark>

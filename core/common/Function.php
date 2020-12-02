@@ -119,6 +119,26 @@ function checkEmail($email){
 }
 
 
+// resize image size
+function resize_image($imgsrc,$imgdst,$imgwidth = 800,$imgheight= 450)
+{
+	$imgsrc = UPLOAD.$imgsrc;
+	str_replace("\\","/",$imgsrc);
+	
+    $imgdst = UPLOAD.$imgdst;
+
+	$arr = getimagesize($imgsrc);
+	$imgWidth = $imgwidth;
+	$imgHeight = $imgheight;
+	// Create image and define colors
+	$imgsrc = imagecreatefromjpeg($imgsrc);
+	//create a background image
+	$image = imagecreatetruecolor($imgWidth, $imgHeight);
+	imagecopyresampled($image, $imgsrc, 0, 0, 0, 0,$imgWidth,$imgHeight,$arr[0], $arr[1]);
+	imagepng($image, $imgdst);
+	imagedestroy($image);
+}
+
 
 
  ?>

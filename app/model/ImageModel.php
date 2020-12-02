@@ -14,6 +14,11 @@ class ImageModel extends Model{
 		$res = $this->get($this->table,'*',array('article_no'=>$id));
 		return $res;
 	}
+
+	public function setOne($id, $data){
+		$re = $this->update($this->table,$data,array('image_no'=>$id));
+		return $re->rowCount();
+	}
 	
 	public function addOne($data){
 		$res = $this->insert($this->table,$data);

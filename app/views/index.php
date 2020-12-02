@@ -28,8 +28,10 @@
 		<div class="container">
 			<ol class="breadcrumb">
 				<span class="pull-right">Current Router</span>
-                <li class="active">Home</li>
+                <?php if(isset($cate_id) && $cate_id != null){echo "<li><a href='/lol/index/index'>Home</a></li>
+        		<li class='active'>Category</li>";}else{echo "<li  class='active'>Home</li>";} ?>
             </ol>
+            
             <?php foreach($articles as $k=>$v): ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">

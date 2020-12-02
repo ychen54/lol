@@ -21,6 +21,17 @@ class IndexController extends \core\Starter
 		$this->display('index.php');
 	}
 
+	public function category(){
+		$id=get('id');
+		$title = "Category";
+		$acticleModel = new ArticleModel();
+		$articles = $acticleModel->getVerifyArticleByCate($id);
+		$this->assign('articles', $articles);
+		$this->assign('title', $title);
+		$this->assign('cate_id', 'category');
+		$this->display('index.php');
+	}
+
 	public function detail(){
 		$id = get('id');
 		$acticleModel = new ArticleModel();
