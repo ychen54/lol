@@ -30,12 +30,12 @@ class ArticleModel extends Model{
 	}
 
 	public function getVerifyArticle(){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.last_update_time DESC")->fetchAll();
+		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ")->fetchAll();
 		return $res;
 	}
 
 	public function getVerifyArticleByCate($cate_id){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE c.cate_id='".$cate_id."' AND verify = 1 ORDER BY a.last_update_time DESC")->fetchAll();
+		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE c.cate_id='".$cate_id."' AND verify = 1 ")->fetchAll();
 		return $res;
 	}
 
@@ -56,6 +56,11 @@ class ArticleModel extends Model{
 
 	public function addClick($id){
 		$res = $this->query("UPDATE articles SET click=click+1 WHERE article_no='".$id."'");
+	}
+
+	public function queryOrder($order = "article_no", $sc = "asc"){
+		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.".$order." ".$sc);
+		return $res;
 	}
 
 }

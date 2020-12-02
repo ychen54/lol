@@ -31,7 +31,21 @@
                 <?php if(isset($cate_id) && $cate_id != null){echo "<li><a href='/lol/index/index'>Home</a></li>
         		<li class='active'>Category</li>";}else{echo "<li  class='active'>Home</li>";} ?>
             </ol>
-            
+            <?php if(!isset($cate_id) || $cate_id == null): ?>
+            	Order By
+            	
+            	<a href="/lol/index/index/order/title/sc/asc" class="btn btn-sm btn-primary"
+      			<?php if(isset($order) && $order=='title' && isset($sc) && $sc=='asc'){echo "disabled='disabled'";} ?> >Title Asc</a>
+      			<a href="/lol/index/index/order/title/sc/desc" class="btn btn-sm btn-primary"
+      			<?php if(isset($order) && $order=='title' && isset($sc) && $sc=='desc'){echo "disabled='disabled'";} ?> >Title Desc</a>
+
+            	<a href="/lol/index/index/order/create_time/sc/asc" class="btn btn-sm btn-success" <?php if(isset($order) && $order=='create_time' && isset($sc) && $sc=='asc'){echo "disabled='disabled'";} ?> >Create Time Asc</a>
+            	<a href="/lol/index/index/order/create_time/sc/desc" class="btn btn-sm btn-success" <?php if(isset($order) && $order=='create_time' && isset($sc) && $sc=='desc'){echo "disabled='disabled'";} ?> >Create Time Desc</a>
+
+            	<a href="/lol/index/index/order/last_update_time/sc/asc" class="btn btn-sm btn-info" <?php if(isset($order) && $order=='last_update_time' && isset($sc) && $sc=='asc'){echo "disabled='disabled'";} ?>>Last Edit Time Asc</a>
+            	<a href="/lol/index/index/order/last_update_time/sc/desc" class="btn btn-sm btn-info" <?php if(isset($order) && $order=='last_update_time' && isset($sc) && $sc=='desc'){echo "disabled='disabled'";} ?>>Last Edit Time Desc</a>
+            	<hr />
+            <?php endif; ?>
             <?php foreach($articles as $k=>$v): ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">

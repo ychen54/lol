@@ -14,8 +14,17 @@ class IndexController extends \core\Starter
 	public function index()
 	{
 		$title = "Index";
-		$acticleModel = new ArticleModel();
-		$articles = $acticleModel->getVerifyArticle();
+		$articleModel = new ArticleModel();
+		$order = get('order');
+		$sc = get('sc');
+		$articles = [];
+		if($order != null && $sc != null){
+			$articles = $articleModel->queryOrder($order, $sc);
+			$this->assign('order', $order);
+			$this->assign('sc', $sc);
+		}else{
+			$articles = $articleModel->getVerifyArticle();
+		}
 		$this->assign('articles', $articles);
 		$this->assign('title', $title);
 		$this->display('index.php');
@@ -24,8 +33,8 @@ class IndexController extends \core\Starter
 	public function category(){
 		$id=get('id');
 		$title = "Category";
-		$acticleModel = new ArticleModel();
-		$articles = $acticleModel->getVerifyArticleByCate($id);
+		$articleModel = new ArticleModel();
+		$articles = $articleModel->getVerifyArticleByCate($id);
 		$this->assign('articles', $articles);
 		$this->assign('title', $title);
 		$this->assign('cate_id', 'category');
@@ -34,10 +43,10 @@ class IndexController extends \core\Starter
 
 	public function detail(){
 		$id = get('id');
-		$acticleModel = new ArticleModel();
-		$article = $acticleModel->getVerifyArticleById($id);
+		$articleModel = new ArticleModel();
+		$article = $articleModel->getVerifyArticleById($id);
 		if($article){
-			$acticleModel->addClick($id);
+			$articleModel->addClick($id);
 		}
 		$this->assign('article', $article);
 		$this->display('detail.php');

@@ -41,7 +41,7 @@
            	<hr>
            	<?php echo $article[0]['content']; ?>
            	<?php if($article[0]['resize_path'] != ''): ?>
-           		<img style="max-width: 1000px;" src="/lol/public/img/<?php echo $article[0]['resize_path']; ?>">
+           		<img class="img-responsive center-block" style="max-width: 1000px;" src="/lol/public/img/<?php echo $article[0]['resize_path']; ?>">
            	<?php endif; ?>
            	<hr>
            	<h5>Author:<mark><?php echo $article[0]['nick_name']; ?></mark>
