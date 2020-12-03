@@ -157,6 +157,33 @@ class IndexController extends \core\Starter
 		imagedestroy($img);
 	}
 
+	public function search(){
+		$cate_id = post("cate_id");
+		$keyword = post("keyword");
+		$pageSize = 5;
+		$pageNum = post("pageNum",1, 'int');
+		
+		$articleModel = new ArticleModel();
+		$count = $articleModel->searchCount($cate_id, $keyword);
+		$total = ceil($count/$pageSize);
+
+		$pageNum = $pageNum <1?1:$pageNum;
+		$pageNum = $pageNum >$total?$total:$pageNum;
+
+		$begin = ($pageNum-1)*$pageSize;
+
+		$articles = $articleModel->searchBy($cate_id, $keyword, $begin, $pageSize);
+		
+
+		$this->assign('articles', $articles);
+		$this->assign('total', $total);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('title', "Search");
+		$this->assign('search_cate', $cate_id);
+		$this->assign('keyword', $keyword);
+		$this->display('search.php');
+	}
+
 	
 
 	public function verify(){

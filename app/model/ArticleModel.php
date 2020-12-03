@@ -59,7 +59,27 @@ class ArticleModel extends Model{
 	}
 
 	public function queryOrder($order = "article_no", $sc = "asc"){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.".$order." ".$sc);
+		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.".$order." ".$sc)->fetchAll();
+		return $res;
+	}
+
+	public function searchCount($cate_id, $keyword){
+		$sql = "SELECT count(0) as con FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ";
+		if($cate_id != null && $cate_id != ""){
+			$sql .= " AND a.cate_id = $cate_id ";
+		}
+		$sql .= " AND (a.title LiKE '%".$keyword."%'  OR a.content LIKE '%".$keyword."%')";
+		$res = $this->query($sql)->fetchAll();
+		return $res[0]['con'];
+	}
+
+	public function searchBy($cate_id, $keyword, $begin, $size){
+		$sql = "SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time  FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ";
+		if($cate_id != null && $cate_id != ""){
+			$sql .= " AND a.cate_id = $cate_id ";
+		}
+		$sql .= " AND (a.title LiKE '%".$keyword."%'  OR a.content LIKE '%".$keyword."%') LIMIT $begin, $size ";
+		$res = $this->query($sql)->fetchAll();
 		return $res;
 	}
 

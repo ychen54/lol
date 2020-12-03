@@ -42,15 +42,16 @@
 					<?php endforeach; ?>
 				</ul>
             	
-            	<form class="navbar-form navbar-left" action="#" method="POST">
-            		<select class="form-control" name="cate_id">
+            	<form class="navbar-form navbar-left" id="searhForm" action="/lol/index/search" method="POST">
+                    <input type="hidden" id="pageNum" name="pageNum" value="1">
+            		<select class="form-control" name="cate_id" id="cate_id">
             			<option value="">All category</option>
             			<?php foreach($cate as $k=>$row): ?>
             				<option value="<?php echo$k; ?>"><?php echo $row; ?></option>
             			<?php endforeach; ?>
 					</select>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search Keyword">
+                        <input type="text" id="keyword" name="keyword" size="30" class="form-control" placeholder="Search from title or content">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

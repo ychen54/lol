@@ -21,7 +21,7 @@ function p($var){
  */
 function post($name, $default = false, $fitt = false){
 	if(!isset($_POST) || !isset($_POST[$name])){
-		return;
+		return $default;
 	}
 	$v = $_POST[$name];
 	if (isset($v)) {
