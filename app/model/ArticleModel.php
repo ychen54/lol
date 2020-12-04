@@ -30,17 +30,17 @@ class ArticleModel extends Model{
 	}
 
 	public function getVerifyArticle(){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ")->fetchAll();
+		$res = $this->query("SELECT a.prelink,a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ")->fetchAll();
 		return $res;
 	}
 
 	public function getVerifyArticleByCate($cate_id){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE c.cate_id='".$cate_id."' AND verify = 1 ")->fetchAll();
+		$res = $this->query("SELECT a.prelink, a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE c.cate_id='".$cate_id."' AND verify = 1 ")->fetchAll();
 		return $res;
 	}
 
 	public function getVerifyArticleById($id){
-		$res = $this->query("SELECT u.nick_name,a.article_no,a.title, c.cate_name, a.content,a.click, a.last_update_time, i.image_path, i.resize_path  FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id LEFT JOIN users u ON a.uid = u.uid  LEFT JOIN article_images i ON i.article_no = a.article_no WHERE verify = 1 AND a.article_no ='".$id."'")->fetchAll();
+		$res = $this->query("SELECT a.prelink, u.nick_name,a.article_no,a.title, c.cate_name, a.content,a.click, a.last_update_time, i.image_path, i.resize_path  FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id LEFT JOIN users u ON a.uid = u.uid  LEFT JOIN article_images i ON i.article_no = a.article_no WHERE verify = 1 AND a.article_no ='".$id."'")->fetchAll();
 		return $res;
 	}
 
@@ -59,7 +59,7 @@ class ArticleModel extends Model{
 	}
 
 	public function queryOrder($order = "article_no", $sc = "asc"){
-		$res = $this->query("SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.".$order." ".$sc)->fetchAll();
+		$res = $this->query("SELECT  a.prelink,a.article_no,a.title, c.cate_name, a.click, a.last_update_time FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ORDER BY a.".$order." ".$sc)->fetchAll();
 		return $res;
 	}
 
@@ -74,7 +74,7 @@ class ArticleModel extends Model{
 	}
 
 	public function searchBy($cate_id, $keyword, $begin, $size){
-		$sql = "SELECT a.article_no,a.title, c.cate_name, a.click, a.last_update_time  FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ";
+		$sql = "SELECT  a.prelink,a.article_no,a.title, c.cate_name, a.click, a.last_update_time  FROM articles a LEFT JOIN categories c ON a.cate_id = c.cate_id WHERE verify = 1 ";
 		if($cate_id != null && $cate_id != ""){
 			$sql .= " AND a.cate_id = $cate_id ";
 		}

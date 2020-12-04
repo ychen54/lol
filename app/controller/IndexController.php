@@ -188,8 +188,6 @@ class IndexController extends \core\Starter
 		$this->display('search.php');
 	}
 
-	
-
 	public function verify(){
 		$data['email'] = post('email');
 		$data['password'] = post('password');

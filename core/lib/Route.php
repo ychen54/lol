@@ -26,22 +26,21 @@ class Route
 				$this->ctrl = $patharr[0];
 				unset($patharr[0]);
 			}
+			if(isset($patharr[1]) && $patharr[1] == "detail"){
+				if(isset($patharr[2])){
+					$_GET['id'] = $patharr[2];
+					unset($patharr[2]);
+				}
+				if(isset($patharr[3])){
+					$_GET['p'] = $patharr[3];
+					unset($patharr[3]);
+				}
+			}
 			if(isset($patharr[1])){
 				$this->action = $patharr[1];
 				unset($patharr[1]);
 			}else{
 				$this->action = Conf::get('ACTION', 'Route');
-			}
-
-			if(isset($patharr[2]) && $patharr[2] == "detail"){
-				// if(isset($patharr[3])){
-				// 	$_GET['id'] = $patharr[3];
-				// 	unset($patharr[3]);
-				// }
-				// if(isset($patharr[4])){
-				// 	$_GET['p'] = $patharr[4];
-				// 	unset($patharr[4]);
-				// }
 			}
 			// get parameter
 			// index/index/id/1
@@ -53,9 +52,6 @@ class Route
 				}
 				$i = $i+2;
 			}
-			//p($_GET);
-
-			//p($patharr);
 		} else {
 			$this->ctrl = Conf::get('CTRL', 'Route');
 			$this->action = Conf::get('ACTION', 'Route');

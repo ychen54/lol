@@ -49,7 +49,7 @@
             <?php foreach($articles as $k=>$v): ?>
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    <h3 class="panel-title"><a href="/lol/index/detail/id/<?php echo $v['article_no']; ?>"><?php echo $v['title']; ?></a>
+			    <h3 class="panel-title"><a href="/lol/index/detail/<?php echo $v['article_no'].'/'.$v['prelink']; ?>"><?php echo $v['title']; ?></a>
 			    	<span class="badge pull-right">Last Edit:<?php echo $v['last_update_time']; ?></span></h3>
 			  </div>
 			  <div class="panel-body">
