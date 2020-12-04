@@ -130,14 +130,30 @@ function resize_image($imgsrc,$imgdst,$imgwidth = 800,$imgheight= 450)
 	$arr = getimagesize($imgsrc);
 	$imgWidth = $imgwidth;
 	$imgHeight = $imgheight;
-	// Create image and define colors
-	$imgsrc = imagecreatefromjpeg($imgsrc);
+	$ext = explode(".", $imgsrc);
+    $ext = $ext[count($ext)-1];
+     if($ext == "jpg" || $ext == "jpeg")
+        $imgsrc = imagecreatefromjpeg($imgsrc);
+    elseif($ext == "png")
+        $imgsrc = imagecreatefrompng($imgsrc);
+    elseif($ext == "gif")
+        $imgsrc = imagecreatefromgif($imgsrc);
 	//create a background image
 	$image = imagecreatetruecolor($imgWidth, $imgHeight);
 	imagecopyresampled($image, $imgsrc, 0, 0, 0, 0,$imgWidth,$imgHeight,$arr[0], $arr[1]);
 	imagepng($image, $imgdst);
 	imagedestroy($image);
 }
+
+ function file_is_an_image($temporary_path, $new_path) { 
+ 	$allowed_mime_types = ['image/gif', 'image/jpeg', 'image/png']; 
+ 	$allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png']; 
+ 	$actual_file_extension = pathinfo($new_path, PATHINFO_EXTENSION); 
+ 	$actual_mime_type = getimagesize($temporary_path)['mime']; 
+ 	$file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions); 
+ 	$mime_type_is_valid = in_array($actual_mime_type, $allowed_mime_types); 
+ 	return $file_extension_is_valid && $mime_type_is_valid; 
+ }
 
 
 

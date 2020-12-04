@@ -82,18 +82,29 @@ class AdminController extends \core\Starter
 		$data['last_update_time'] = date("Y-m-d H:i:s", time());
 
 		$artmodel = new ArticleModel();
+		if(isset($_FILES['img']) && isset($_FILES['img']['name']) && $_FILES['img']['name'] !=''){
+			$img['image_name'] = $_FILES['img']['name'];
+			$img['image_path'] = date("s", time()).$_FILES["img"]["name"];
+			if( $_FILES["img"]["tmp_name"] == null || $_FILES["img"]["tmp_name"] =="" ||
+				!file_is_an_image($_FILES["img"]["tmp_name"], $img['image_path']) ){
+				fail_jump("/lol/admin/add_article","only upload image!");
+				return;
+			}
+		}
+
 		$art_no = $artmodel->addOne($data);
 		if($art_no<1){
 			fail_jump("/lol/admin/add_article","create article failed!");
 			return;
 		}
 		if(isset($_FILES['img']) && isset($_FILES['img']['name']) && $_FILES['img']['name'] !=''){
-			if( !stristr($_FILES['img']['type'], 'image/') ){
+			$img['image_name'] = $_FILES['img']['name'];
+			$img['image_path'] = date("s", time()).$_FILES["img"]["name"];
+			if( $_FILES["img"]["tmp_name"] == null || $_FILES["img"]["tmp_name"] =="" ||
+				!file_is_an_image($_FILES["img"]["tmp_name"], $img['image_path']) ){
 				fail_jump("/lol/admin/add_article","only upload image!");
 				return;
 			}
-			$img['image_name'] = $_FILES['img']['name'];
-			$img['image_path'] = date("s", time()).$_FILES["img"]["name"];
 			move_uploaded_file($_FILES["img"]["tmp_name"],UPLOAD.$img['image_path']);
 			// get extension of image
 			$ext = explode(".", $img['image_name']);
@@ -194,10 +205,15 @@ class AdminController extends \core\Starter
 			if($oldimg){
 				// delete old image
 				if(isset($oldimg['image_path']) && $oldimg['image_path'] != null){
-					unlink(UPLOAD.$oldimg['image_path']);
+					if(file_exists(UPLOAD.$oldimg['image_path'])){
+						unlink(UPLOAD.$oldimg['image_path']);
+					}
+					
 				}
 				if(isset($oldimg['resize_path']) && $oldimg['resize_path'] != null){
-					unlink(UPLOAD.$oldimg['resize_path']);
+					if(file_exists(UPLOAD.$oldimg['resize_path'])){
+						unlink(UPLOAD.$oldimg['resize_path']);
+					}
 				}
 			}
 
@@ -242,11 +258,15 @@ class AdminController extends \core\Starter
 		$imgmodel = new ImageModel();
 		$img = $imgmodel->getOne($id);
 		if($img){
-			if(isset($oldimg['image_path']) && $oldimg['image_path'] != null){
-				unlink(UPLOAD.$oldimg['image_path']);
+			if(isset($img['image_path']) && $img['image_path'] != null){
+				if(file_exists(UPLOAD.$img['image_path'])){
+						unlink(UPLOAD.$img['image_path']);
+					}
 			}
-			if(isset($oldimg['resize_path']) && $oldimg['resize_path'] != null){
-				unlink(UPLOAD.$oldimg['resize_path']);
+			if(isset($img['resize_path']) && $img['resize_path'] != null){
+				if(file_exists(UPLOAD.$img['resize_path'])){
+						unlink(UPLOAD.$img['resize_path']);
+				}
 			}
 			$imgmodel->deleteOne($img['image_no']);
 		}
