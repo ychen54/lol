@@ -32,6 +32,10 @@ class SuperController extends \core\Starter {
 		}
 	}
 
+	public function users(){
+		var_dump(phpinfo());
+	}
+
 
 }
 

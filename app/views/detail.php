@@ -48,7 +48,13 @@
              		<span class="pull-right">Last Edit Time:<mark><?php echo $article[0]['last_update_time']; ?></mark></span>
              	</h5>
               <hr>
+              <h3>Comments</h3>
+              <?php foreach($comments as $k=>$v): ?>
+                <h5><?php echo $v['content']; ?> <span class="label label-info"><?php echo $v['create_time']; ?></span></h5>
+              <?php endforeach; ?>
+              <hr>
           <form class="form-inline">
+            <input type="hidden" name="article_no" id="article_no" value="<?php echo $article[0]['article_no'];?>">
             <div class="form-group">
               <label for="comment">Comment</label>
               <input type="text" size="60" class="form-control" id="comment" placeholder="Your comment">
@@ -60,7 +66,7 @@
               <button type="button" class="btn btn-info btn-sm" id="change_captcha">change</button>
             </div>
             <hr>
-            <button type="submit" class="btn btn-success">Send</button>
+            <button id="sub" type="button" class="btn btn-success">Send</button>
           </form>
 
 
@@ -72,7 +78,53 @@
 
     <?php include 'footer.php';include 'message.php'; ?>
 </body>
+<script type="text/javascript">
+  $(function(){
+      $("#change_captcha").click(function() {
+          var rand = parseInt(new Date().getTime()) + Math.random();
+          console.log("rand:/lol/index/captcha/id/" + rand);
+          $('#cap').attr('src', '/lol/index/captcha/id/' + rand);
+      });
+      $("#sub").click(function(){
+        var comment = $("#comment").val();
+        var captcha = $("#captcha").val();
+        if (comment == null || comment == undefined || comment == "") {
+            show_msg("error", "comment can't be empty");
+            disMsgDelay(3000);
+            return;
+        }
+        if (captcha == null || captcha == undefined || captcha == "") {
+            show_msg("error", "captcha can't be empty");
+            disMsgDelay(3000);
+            return;
+        }
+        $.ajax({
+            type: "post",
+            url: "/lol/index/addComment",
+            async: false,
+            data: { "article_no":$("#article_no").val(),"comment":comment, "captcha":captcha},
+            success: function(data) {
+                console.log(data);
+                var res = $.parseJSON(data);
+                console.log(res);
+                var rand = parseInt(new Date().getTime()) + Math.random();
+                if (res.code == 1) {
+                    show_msg("success", res.msg);
+                    disMsgDelay(3000);
+                    $('#cap').attr('src', '/lol/index/captcha/id/' + rand);
+                }else{
+                    $('#cap').attr('src', '/lol/index/captcha/id/' + rand);
+                    show_msg("error", res.msg);
+                    disMsgDelay(3000);
+                }
+            }
+        });
+      })
+      
+  });
+  
 
+</script>
 </html>
 
 

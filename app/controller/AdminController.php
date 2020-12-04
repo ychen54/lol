@@ -5,6 +5,7 @@ use \app\model\UserModel;
 use \app\model\CategoryModel;
 use \app\model\ArticleModel;
 use \app\model\ImageModel;
+use \app\model\CommentModel;
 
 class AdminController extends \core\Starter
 {
@@ -20,7 +21,6 @@ class AdminController extends \core\Starter
 
 	public function index(){
 		$title = "Admin";
-		$data = "Admin page";
 		
 		$model = new ArticleModel();
 		$articles = [];
@@ -32,7 +32,6 @@ class AdminController extends \core\Starter
 		//var_dump($res)
 		$this->assign('articles', $articles);
 		$this->assign('title', $title);
-		$this->assign('data', $data);
 		$this->display('admin.php');
 	}
 
@@ -273,6 +272,60 @@ class AdminController extends \core\Starter
 		$model->deleteOne($id);
 		succ_jump("/lol/admin/index","delete successfully!");
 
+	}
+
+	public function comments(){
+		$title = "Comments";
+		
+		$model = new CommentModel();
+		$articles = [];
+		if($_SESSION['type'] == 'admin'){
+			$comments =  $model->getAllComment();
+		}else{
+			$comments =  $model->getAllCommentByUser($_SESSION['uid']);
+		}
+		//var_dump($res)
+		$this->assign('comments', $comments);
+		$this->assign('title', $title);
+		$this->display('comments.php');
+	}
+
+	public function confirmComment(){
+		$no = post("id");
+		$model = new CommentModel();
+		$data['verify'] = 1;
+		$row = $model->setOne($no,$data);
+		if($row>0){
+			$arr['code'] = 1;
+			$arr['msg'] = "Confirm successfully";
+			echo json_encode($arr);
+		}else{
+			$arr['code'] = 0;
+			$arr['msg'] = "Confirm failed!";
+			echo json_encode($arr);
+		}
+	}
+
+	public function deleteComment(){
+		$id = get('id');
+		$model = new CommentModel();
+		$res = [];
+        if($_SESSION['type'] != 'admin'){
+			$res =  $model->getAllCommentByUser($_SESSION['uid']);
+			$flag = false;
+			foreach ($res as $key => $value) {
+				if($value['comment_no'] == $id){
+					$flag = true;
+					break;
+				}
+			}
+			if(!$flag){
+				// the article didn't create by user
+				fail_jump("/lol/admin/comments","you can delete comments which belong to your article");
+			}
+		}
+		$model->deleteOne($id);
+		succ_jump("/lol/admin/comments","delete successfully!");
 	}
 
 }

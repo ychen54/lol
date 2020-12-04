@@ -4,7 +4,7 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' href='/lol/vendor/twbs/bootstrap/dist/css/bootstrap.css' type='text/css'>
+    <link rel='stylesheet' href='/lol/vendor/twbs/bootstrap/dist/css/bootstrap.css' type='text/css' />
     <link rel='stylesheet' href='/lol/public/css/common.css' type='text/css'>
     <script type='text/javascript' src='/lol/vendor/components/jquery/jquery.min.js'></script>
     <script type='text/javascript' src='/lol/vendor/twbs/bootstrap/dist/js/bootstrap.js'></script>
@@ -19,37 +19,34 @@
         <div class="container pull-left" style="width: 1000px; height: auto;">
             <ol class="breadcrumb">
                 <li><a href="/lol/admin/index">Home</a></li>
-                <li class="active">Article List</li>
+                <li class="active">Comment List</li>
             </ol>
-            <a href="/lol/admin/add_article" class="btn btn-primary btn-sm">Add Article</a>
             <hr>
             <div class="bs-example" data-example-id="striped-table">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                           <th>#</th>
-                          <th>Title</th>
-                          <th>Category</th>
-                          <th>Click</th>
+                          <th>Article Title</th>
+                          <th>Comment Content</th>
                           <th>verify</th>
                           <th>Create Time</th>
                           <th>Operation</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($articles as $k=>$v): ?>
+                        <?php foreach($comments as $k=>$v): ?>
                         <tr>
                           <th scope="row"><?php echo ++$k; ?></th>
                           <td><?php echo $v['title'];; ?></td>
-                          <td><?php echo $v['cate_name']; ?></td>
-                          <td><?php echo $v['click']; ?></td>
-                          <td id="verify<?php echo $v['article_no']; ?>"><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirmed";} ?></td>
+                          <td><?php echo $v['content']; ?></td>
+                          <td id="verify<?php echo $v['comment_no']; ?>"><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirmed";} ?></td>
                           <td><?php echo $v['create_time']; ?></td>
                           <td>
-                            <a href="/lol/admin/editArticle/id/<?php echo $v['article_no']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="/lol/admin/deleteArticle/id/<?php echo $v['article_no']; ?>" class="btn btn-warning btn-sm">Delete</a>
-                            <?php if($_SESSION['type'] == 'admin' && $v['verify'] == 0): ?>
-                                <button data-id="<?php echo $v['article_no']; ?>" class="btn btn-success btn-sm confirm">confirm</button>
+                            <a href="/lol/admin/deleteComment/id/<?php echo $v['comment_no']; ?>" class="btn btn-warning btn-sm">Delete</a>
+                            <?php if($_SESSION['type'] == 'admin' && $v['verify'] == 0 ): ?>
+                                <button data-id="<?php echo $v['comment_no']; ?>" id="confirm<?php echo $v['comment_no']; ?>" 
+                                    class="btn btn-success btn-sm confirm">confirm</button>
                             <?php endif; ?>
                           </td>
                         </tr>
@@ -69,10 +66,10 @@
         $(function(){
             $(".confirm").click(function(){
                 var id = $(this).data("id");
+
                 $.ajax({
                     type: "post",
-                    url: "/lol/super/confirm",
-                    async: false,
+                    url: "/lol/admin/confirmComment",
                     data: { "id": id},
                     success: function(data) {
                         var a = $.parseJSON(data);
@@ -80,6 +77,7 @@
                             show_msg("success", a.msg);
                             disMsgDelay(3000);
                             $("#verify"+id).text("confirmed");
+                            $("#confirm"+id).hide();
                         }else{
                             show_msg("error", a.msg);
                             disMsgDelay(3000);
@@ -87,8 +85,7 @@
                     }
                 });
             });
-
-            $("#articlenav").addClass("active");
+            $("#commentnav").addClass("active");
         })
 
     </script>

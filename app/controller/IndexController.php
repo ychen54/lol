@@ -2,6 +2,7 @@
 namespace app\controller;
 use \app\model\UserModel;
 use \app\model\ArticleModel;
+use \app\model\CommentModel;
 
 class IndexController extends \core\Starter
 {
@@ -48,7 +49,10 @@ class IndexController extends \core\Starter
 		if($article){
 			$articleModel->addClick($id);
 		}
+		$commentModel = new CommentModel();
+		$comments = $commentModel->getCommentByArticle($id);
 		$this->assign('article', $article);
+		$this->assign('comments', $comments);
 		$this->display('detail.php');
 	}
 
@@ -198,7 +202,7 @@ class IndexController extends \core\Starter
 			}
 			$model = new UserModel();
 			$res = $model->getOneByEmail($data['email']);
-			if($res && password_verify($data['password'],$res['password'])){
+			if($res && password_verify($data['password'],$res['password']) && $res['disabled'] == 0){
 				$_SESSION['uid'] = $res['uid'];
 				$_SESSION['nickname'] = $res['nick_name'];
 				$_SESSION['type'] = $res['type'];
@@ -211,6 +215,43 @@ class IndexController extends \core\Starter
 		}
 		//var_dump($data);
 		//var_dump($captcha);
+	}
+
+	public function addComment(){
+		$article_no = post("article_no");
+		$comment = post("comment");
+		$captcha = post("captcha");
+		if($comment == null || $comment == "" || strlen(trim($comment)) == 0){
+			$arr['code'] = 0;
+			$arr['msg'] = "comment can't be empty!";
+			echo json_encode($arr);
+			return;
+		}
+		if(strtolower($captcha) != $_SESSION['captcha']){
+			$arr['code'] = 0;
+			$arr['msg'] = "captcha error!";
+			echo json_encode($arr);
+			return;
+		}
+		$model = new CommentModel();
+		$data['content'] = $comment;
+		$data['article_no'] = $article_no;
+		$data['verify'] = 0;
+		$data['create_time'] = date("Y-m-d H:i:s", time());
+		$count = $model->addOne($data);
+		$arr['count'] = $count;
+		if($count >0){
+			$arr['code'] = 1;
+			$arr['msg'] = "comment Successfully";
+			echo json_encode($arr);
+			return;
+		}else{
+			$arr['code'] = 0;
+			$arr['msg'] = "comment failed!";
+			echo json_encode($arr);
+			return;
+		}
+
 	}
 
 	

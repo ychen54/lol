@@ -3,11 +3,10 @@
                 <a href="#" style="font-weight: bolder;" class="list-group-item list-group-item-info">
                     Admin Page
                 </a>
-                <a href="/lol/admin/index" class="list-group-item active">My Articles</a>
-                <a href="/lol/admin/password" class="list-group-item">Update Password</a>
+                <a href="/lol/admin/index" id="articlenav" class="list-group-item">My Articles</a>
+                <a href="/lol/admin/comments" id="commentnav" class="list-group-item">Comments List</a>
                 <?php if($_SESSION['type'] == 'admin'): ?>
-                    <a href="#" class="list-group-item">Comments List</a>
-                    <a href="#" class="list-group-item">Users List</a>
+                    <a href="/lol/super/users" id="usernav" class="list-group-item">Users List</a>
                 <?php endif; ?>
             </div>
 

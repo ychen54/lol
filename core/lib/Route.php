@@ -32,6 +32,17 @@ class Route
 			}else{
 				$this->action = Conf::get('ACTION', 'Route');
 			}
+
+			if(isset($patharr[2]) && $patharr[2] == "detail"){
+				// if(isset($patharr[3])){
+				// 	$_GET['id'] = $patharr[3];
+				// 	unset($patharr[3]);
+				// }
+				// if(isset($patharr[4])){
+				// 	$_GET['p'] = $patharr[4];
+				// 	unset($patharr[4]);
+				// }
+			}
 			// get parameter
 			// index/index/id/1
 			$count = count($patharr)+2;
