@@ -1,6 +1,8 @@
 <?php 
 namespace app\controller;
 use \app\model\ArticleModel;
+use \app\model\CommentModel;
+use \app\model\UserModel;
 
 class SuperController extends \core\Starter {
 	public function __construct(){
@@ -33,7 +35,19 @@ class SuperController extends \core\Starter {
 	}
 
 	public function users(){
-		var_dump(phpinfo());
+		$title = "Users";
+		
+		$model = new CommentModel();
+		$articles = [];
+		if($_SESSION['type'] == 'admin'){
+			$comments =  $model->getAllComment();
+		}else{
+			$comments =  $model->getAllCommentByUser($_SESSION['uid']);
+		}
+		//var_dump($res)
+		$this->assign('comments', $comments);
+		$this->assign('title', $title);
+		$this->display('users.php');
 	}
 
 
