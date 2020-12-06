@@ -14,13 +14,13 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
-    'name' => 'final/project',
+    'reference' => '5f87028671f2c031239d42c82aa786ce6dc18e2d',
+    'name' => 'lol/information_plaform',
   ),
   'versions' => 
   array (
@@ -52,14 +52,14 @@ private static $installed = array (
       ),
       'reference' => '2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8',
     ),
-    'final/project' => 
+    'lol/information_plaform' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '5f87028671f2c031239d42c82aa786ce6dc18e2d',
     ),
     'psr/log' => 
     array (
@@ -71,24 +71,6 @@ private static $installed = array (
       ),
       'reference' => 'dd738d0b4491f32725492cf345f6b501f5922fec',
     ),
-    'symfony/polyfill-ctype' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
-    ),
-    'symfony/polyfill-mbstring' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b5f7b932ee6fa802fc792eabd77c4c88084517ce',
-    ),
     'twbs/bootstrap' => 
     array (
       'pretty_version' => 'v3.3.7',
@@ -97,15 +79,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '0b9c4a4007c44201dce9a6cc1a38407005c26c86',
-    ),
-    'twig/twig' => 
-    array (
-      'pretty_version' => 'v2.12.5',
-      'version' => '2.12.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '18772e0190734944277ee97a02a9a6c6555fcd94',
     ),
     'twitter/bootstrap' => 
     array (

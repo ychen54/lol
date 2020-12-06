@@ -6,24 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit0dabbb793471fba0069310b7674af821
 {
-    public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
             'Whoops\\' => 7,
-        ),
-        'T' => 
-        array (
-            'Twig\\' => 5,
-        ),
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
         'P' => 
         array (
@@ -40,18 +26,6 @@ class ComposerStaticInit0dabbb793471fba0069310b7674af821
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
         ),
-        'Twig\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/twig/twig/src',
-        ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -59,16 +33,6 @@ class ComposerStaticInit0dabbb793471fba0069310b7674af821
         'Medoo\\' => 
         array (
             0 => __DIR__ . '/..' . '/catfan/medoo/src',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Twig_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/twig/lib',
-            ),
         ),
     );
 
@@ -81,7 +45,6 @@ class ComposerStaticInit0dabbb793471fba0069310b7674af821
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit0dabbb793471fba0069310b7674af821::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit0dabbb793471fba0069310b7674af821::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0dabbb793471fba0069310b7674af821::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit0dabbb793471fba0069310b7674af821::$classMap;
 
         }, null, ClassLoader::class);

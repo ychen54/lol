@@ -1,5 +1,5 @@
 {
-    "name": "information plaform",
+    "name": "lol/information_plaform",
     "description": "this is final project",
     "type": "library",
     "authors": [
@@ -13,7 +13,6 @@
       "php": ">=7.0",
       "filp/whoops":"*",
       "catfan/medoo":"*",
-      "twig/twig":"*",
       "components/jquery": "2.1.*",
       "twbs/bootstrap":"3.3.7"
     }

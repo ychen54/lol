@@ -1,4 +1,4 @@
-<!-- 消息提示框 -->
+<!-- message -->
 	<div class="modal fade bs-example-modal-sm" id="msg-modal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
@@ -16,4 +16,4 @@
 			</div>
 		</div>
 	</div>
-	<!-- 消息提示框结束 -->
+	<!-- message -->
