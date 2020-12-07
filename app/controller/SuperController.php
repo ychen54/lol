@@ -37,15 +37,10 @@ class SuperController extends \core\Starter {
 	public function users(){
 		$title = "Users";
 		
-		$model = new CommentModel();
-		$articles = [];
-		if($_SESSION['type'] == 'admin'){
-			$comments =  $model->getAllComment();
-		}else{
-			$comments =  $model->getAllCommentByUser($_SESSION['uid']);
-		}
+		$model = new UserModel();
+		$users = $model->lists();
 		//var_dump($res)
-		$this->assign('comments', $comments);
+		$this->assign('users', $users);
 		$this->assign('title', $title);
 		$this->display('users.php');
 	}

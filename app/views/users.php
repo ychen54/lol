@@ -21,33 +21,33 @@
                 <li><a href="/lol/admin/index">Home</a></li>
                 <li class="active">Users List</li>
             </ol>
+            <a href="#" id="create_user_btn" class="btn btn-primary btn-sm">Create User</a>
             <hr>
             <div class="bs-example" data-example-id="striped-table">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                           <th>#</th>
-                          <th>Article Title</th>
-                          <th>Comment Content</th>
-                          <th>verify</th>
+                          <th>Nick Name</th>
+                          <th>Email</th>
                           <th>Create Time</th>
+                          <th>Type</th>
+                          <th>Status</th>
                           <th>Operation</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($comments as $k=>$v): ?>
+                        <?php foreach($users as $k=>$v): ?>
                         <tr>
                           <th scope="row"><?php echo ++$k; ?></th>
-                          <td><?php echo $v['title'];; ?></td>
-                          <td><?php echo $v['content']; ?></td>
-                          <td id="verify<?php echo $v['comment_no']; ?>"><?php if($v['verify'] == 0){echo "reviewing";}else{echo "confirmed";} ?></td>
+                          <td><?php echo $v['nick_name'];; ?></td>
+                          <td><?php echo $v['email']; ?></td>
                           <td><?php echo $v['create_time']; ?></td>
+                          <td><?php echo $v['type']; ?></td>
+                          <td id="status<?php echo $v['uid']; ?>"><?php if($v['disabled'] == 0){echo "normal";}else{echo "deleted";} ?></td>
                           <td>
-                            <a href="/lol/admin/deleteComment/id/<?php echo $v['comment_no']; ?>" class="btn btn-warning btn-sm">Delete</a>
-                            <?php if($_SESSION['type'] == 'admin' && $v['verify'] == 0 ): ?>
-                                <button data-id="<?php echo $v['comment_no']; ?>" id="confirm<?php echo $v['comment_no']; ?>" 
-                                    class="btn btn-success btn-sm confirm">confirm</button>
-                            <?php endif; ?>
+                            <button data-id="<?php echo $v['uid']; ?>" id="delete<?php echo $v['uid']; ?>" class="btn btn-warning btn-sm">Delete</button>
+                            <button data-id="<?php echo $v['uid']; ?>" id="edit" class="btn btn-success btn-sm confirm">edit</button>
                           </td>
                         </tr>
                         <?php endforeach; ?>
