@@ -34,14 +34,14 @@ function post($name, $default = false, $fitt = false){
 					if(is_numeric($v)){
 						return $v;
 					} else {
-						return $default;
+						return 0;
 					}
 					break;
 				case 'string':
 					if(is_string($v)){
 						return $v;
 					} else {
-						return $default;
+						return '';
 					}
 					break;
 				
@@ -73,14 +73,14 @@ function get($name, $default = false, $fitt = false){
 					if(is_numeric($v)){
 						return $v;
 					} else {
-						return $default;
+						return 0;
 					}
 					break;
 				case 'string':
 					if(is_string($v)){
 						return $v;
 					} else {
-						return $default;
+						return '';
 					}
 					break;
 				
