@@ -50,6 +50,51 @@ class SuperController extends \core\Starter {
 		$this->display('users.php');
 	}
 
+	public function addUser(){
+		$data['nick_name'] = post('nickname');
+		$data['email'] = post('email');
+		$data['password'] = post('password');
+		$arr = array();
+		$model = new UserModel();
+		$res = $model->getOneByEmail($data['email']);
+		if(!checkEmail($data['email']) || isset($res['uid'])){
+			$arr['code'] = 0;
+			$arr['msg'] = "invalid email or the email have been registered";
+			echo json_encode($arr);
+			return;
+		}
+		if($data['nick_name'] == ""){
+			$arr['code'] = 0;
+			$arr['msg'] = "nickname can't be empty!";
+			echo json_encode($arr);
+			return;
+		}
+		if($data['password'] == ""){
+			$arr['code'] = 0;
+			$arr['msg'] = "password can't be empty!";
+			echo json_encode($arr);
+			return;
+		}
+		$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+		$data['type'] = 'login';
+		$data['create_time'] = date("Y-m-d H:i:s", time());
+		$data['last_update_time'] = date("Y-m-d H:i:s", time());
+		$res1 = $model->addOne($data);
+		if($res1 < 1){
+			$arr['code'] = 0;
+			$arr['msg'] = "add user failed!";
+			echo json_encode($arr);
+			return;
+		}
+		$arr['code'] = 1;
+		$arr['msg'] = "add user success";
+		echo json_encode($arr);
+	}
+
+	public function edit(){
+		
+	}
+
 
 
 
