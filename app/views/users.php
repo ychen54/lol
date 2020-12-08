@@ -124,7 +124,8 @@
                     <h4 class="modal-title">Edit User</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="#" id="editForm" method="POST" class="form-horizontal" style="margin-top: 40px;">
+            <form action="#" id="editForm" method="POST" class="form-horizontal" style="margin-top: 40px;">
+                <input type="hidden" name="uid" id="uid">
                 <div class="form-group">
                     <label for="edit_nickname" class="col-sm-3 control-label"><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>Nick name</label>
                     <div class="col-sm-9">
@@ -140,13 +141,16 @@
                 <div class="form-group">
                     <label for="edit_psd" class="col-sm-3 control-label"><i class="glyphicon glyphicon-lock"></i>Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" name="password" id="edit_psd" placeholder="Password"><span id="edit-password" style="color:red;display:none;">password can't be empty</span>
+                        <input type="password" class="form-control" name="password" id="edit_psd" placeholder="Password"><span id="edit-password" style="color:red;display:none;">password can't be empty or less than six char</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="edit_confirm" class="col-sm-3 control-label"><i class="glyphicon glyphicon-lock"></i>Confirm</label>
+                    <label for="edit_confirm" class="col-sm-3 control-label">User Type</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" name="confirm" id="edit_confirm" placeholder="Confirm Password"><span id="edit-confirm" style="color:red;display:none;">confirm password can't be empty or different password</span>
+                        <select class="form-control" name="type" id="user_type">
+                            <option value="login">Nomal</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -260,18 +264,22 @@
 
             $(".edit").click(function(){
                 var id = $(this).data("id");
-                $('#edit_user_modal').modal('show');
+                
                 $.ajax({
                     type: "post",
                     url: "/lol/super/edit",
-                    data: { "id": id, "data":0},
+                    data: { "id": id},
                     success: function(data) {
                         var a = $.parseJSON(data);
                         if (a.code == 1) {
-                            show_msg("success", a.msg);
-                            disMsgDelay(3000);
-                            $("#status"+id).text("normal");
-                            $("#enable"+id).hide(1000);
+                            $("#uid").val(a.user.uid);
+                            $("#edit_nickname").val(a.user.nick_name);
+                            $("#edit_email").val(a.user.email);
+                            $("#edit_passowrd").val("");
+                            $("#user_type").val(a.user.type);
+                            $('#edit_user_modal').modal('show');
+                            console.log(a.user);
+                            console.log(a.user.uid);
                         }else{
                             show_msg("error", a.msg);
                             disMsgDelay(3000);
@@ -282,7 +290,6 @@
 
             $("#edit_user_sub").click(function() {
                 var nickname = $("#edit_nickname").val();
-                var confirm = $("#edit_confirm").val();
                 var email = $("#edit_email").val();
                 var psd = $("#edit_psd").val();
                 if (nickname == null || nickname == undefined || nickname == "" ) {
@@ -298,23 +305,17 @@
                 } else {
                     $("#edit-email").css("display", "none");
                 }
-                if (psd == null || psd == undefined || psd == "") {
+                if (psd == null || psd == undefined || psd == "" || psd.length < 6) {
                     $("#edit-password").css("display", "block");
                     return;
                 } else {
                     $("#edit-password").css("display", "none");
                 }
-                if (confirm == null || confirm == undefined || confirm == "" || confirm != psd) {
-                    $("#edit-confirm").css("display", "block");
-                    return;
-                } else {
-                    $("#edit-confirm").css("display", "none");
-                }
                 $.ajax({
                     type: "post",
                     url: "/lol/super/editUser",
                     async: false,
-                    data: { "nickname": nickname, "email": email, "password": psd},
+                    data: { "uid": $("#uid").val(), "nickname": nickname, "email": email, "password": psd, "type": $("#user_type").val()},
                     success: function(data) {
                         console.log(data);
                         var a = $.parseJSON(data);

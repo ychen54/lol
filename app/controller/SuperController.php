@@ -92,7 +92,59 @@ class SuperController extends \core\Starter {
 	}
 
 	public function edit(){
-		
+		$no = post("id", 0, 'int');
+		$model = new UserModel();
+		$rs = $model->getOne($no);
+		if($rs){
+			$arr['code'] = 1;
+			$arr['user'] = $rs;
+			echo json_encode($arr);
+		}else{
+			$arr['code'] = 0;
+			$arr['msg'] = "Operation failed!";
+			echo json_encode($arr);
+		}
+	}
+
+	public function editUser(){
+		$data['uid'] = post('uid', 0, 'int');
+		$data['nick_name'] = post('nickname');
+		$data['email'] = post('email');
+		$data['password'] = post('password');
+		$arr = array();
+		$model = new UserModel();
+		$res = $model->getOneByEmail($data['email']);
+		if(!checkEmail($data['email']) || (isset($res['uid']) && $res['uid'] != $data['uid'])){
+			$arr['code'] = 0;
+			$arr['msg'] = "invalid email or the email have been registered";
+			echo json_encode($arr);
+			return;
+		}
+		if($data['nick_name'] == ""){
+			$arr['code'] = 0;
+			$arr['msg'] = "nickname can't be empty!";
+			echo json_encode($arr);
+			return;
+		}
+		if($data['password'] == "" || strlen($data['password']) < 6){
+			$arr['code'] = 0;
+			$arr['msg'] = "password can't be empty or less than six char!";
+			echo json_encode($arr);
+			return;
+		}
+		$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+		$data['type'] = post('type');
+		$data['last_update_time'] = date("Y-m-d H:i:s", time());
+		$res1 = $model->setOne($data['uid'],$data);
+		if($res1 < 1){
+			$arr['code'] = 0;
+			$arr['msg'] = "edit user failed!";
+			echo json_encode($arr);
+			return;
+		}
+		$arr['code'] = 1;
+		$arr['msg'] = "edit user success";
+		echo json_encode($arr);
 	}
 
 
