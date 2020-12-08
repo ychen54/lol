@@ -18,18 +18,23 @@ class SuperController extends \core\Starter {
         }
 	}
 
-	public function confirm(){
+	public function deleteUser(){
 		$no = post("id");
-		$model = new ArticleModel();
-		$data['verify'] = 1;
+		$da = post("data", 1, 'int');
+		$model = new UserModel();
+		$data['disabled'] = $da;
 		$row = $model->setOne($no,$data);
-		if($row>0){
+		if($row>0 && $da ==1){
 			$arr['code'] = 1;
-			$arr['msg'] = "Confirm successfully";
+			$arr['msg'] = "Disable successfully";
+			echo json_encode($arr);
+		}else if($row>0 && $da ==0){
+			$arr['code'] = 1;
+			$arr['msg'] = "Enable successfully";
 			echo json_encode($arr);
 		}else{
 			$arr['code'] = 0;
-			$arr['msg'] = "Confirm failed!";
+			$arr['msg'] = "Operation failed!";
 			echo json_encode($arr);
 		}
 	}
@@ -44,6 +49,8 @@ class SuperController extends \core\Starter {
 		$this->assign('title', $title);
 		$this->display('users.php');
 	}
+
+
 
 
 }

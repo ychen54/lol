@@ -46,8 +46,13 @@
                           <td><?php echo $v['type']; ?></td>
                           <td id="status<?php echo $v['uid']; ?>"><?php if($v['disabled'] == 0){echo "normal";}else{echo "deleted";} ?></td>
                           <td>
-                            <button data-id="<?php echo $v['uid']; ?>" id="delete<?php echo $v['uid']; ?>" class="btn btn-warning btn-sm">Delete</button>
-                            <button data-id="<?php echo $v['uid']; ?>" id="edit" class="btn btn-success btn-sm confirm">edit</button>
+                            <?php if($v['disabled'] == 0): ?>
+                                <button data-id="<?php echo $v['uid']; ?>" id="delete<?php echo $v['uid']; ?>" class="btn btn-warning btn-sm delete">disable</button>
+                            <?php endif;?>
+                            <?php if($v['disabled'] == 1): ?>
+                                <button data-id="<?php echo $v['uid']; ?>" id="enable<?php echo $v['uid']; ?>" class="btn btn-info btn-sm enable">enable</button>
+                            <?php endif;?>
+                            <button data-id="<?php echo $v['uid']; ?>" id="edit" class="btn btn-success btn-sm">edit</button>
                           </td>
                         </tr>
                         <?php endforeach; ?>
@@ -64,19 +69,39 @@
 
     <script type="text/javascript">
         $(function(){
-            $(".confirm").click(function(){
+            $(".delete").click(function(){
                 var id = $(this).data("id");
                 $.ajax({
                     type: "post",
-                    url: "/lol/admin/confirmComment",
-                    data: { "id": id},
+                    url: "/lol/super/deleteUser",
+                    data: { "id": id, "data":1},
                     success: function(data) {
                         var a = $.parseJSON(data);
                         if (a.code == 1) {
                             show_msg("success", a.msg);
                             disMsgDelay(3000);
-                            $("#verify"+id).text("confirmed");
-                            $("#confirm"+id).hide();
+                            $("#status"+id).text("deleted");
+                            $("#delete"+id).hide(1000);
+                        }else{
+                            show_msg("error", a.msg);
+                            disMsgDelay(3000);
+                        }
+                    }
+                });
+            });
+            $(".enable").click(function(){
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "post",
+                    url: "/lol/super/deleteUser",
+                    data: { "id": id, "data":0},
+                    success: function(data) {
+                        var a = $.parseJSON(data);
+                        if (a.code == 1) {
+                            show_msg("success", a.msg);
+                            disMsgDelay(3000);
+                            $("#status"+id).text("normal");
+                            $("#enable"+id).hide(1000);
                         }else{
                             show_msg("error", a.msg);
                             disMsgDelay(3000);
