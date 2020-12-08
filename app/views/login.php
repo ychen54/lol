@@ -99,22 +99,16 @@ $(function() {
             async: false,
             data: { "email": email, "password": psd, "captcha": captcha },
             success: function(data) {
-                if (data == 1) {
+                console.log(data);
+                var a = $.parseJSON(data);
+                console.log(a);
+                if (a.code == 1) {
                     show_msg("success", "login successfully");
                     window.location.href = '/lol/admin/index';
-                }
-                var rand = parseInt(new Date().getTime()) + Math.random();
-                $('#cap').attr('src', '/lol/index/captcha/id/' + rand);
-                if(data == 0){
-                    show_msg("error", "login failed, captcha error!");
-                    disMsgDelay(3000);
-                }
-                if(data == 2){
-                    show_msg("error", "login failed, password error!");
-                    disMsgDelay(3000);
-                }
-                if(data == 3){
-                    show_msg("error", "login failed, email error!");
+                }else{
+                    var rand = parseInt(new Date().getTime()) + Math.random();
+                    $('#cap').attr('src', '/lol/index/captcha/id/' + rand);
+                    show_msg("error", a.msg);
                     disMsgDelay(3000);
                 }
             }

@@ -195,7 +195,9 @@ class IndexController extends \core\Starter
 		$captcha = $_SESSION['captcha'];
 		if(strtolower($data['captcha']) === $captcha){
 			if($data['email'] == '' || !checkEmail($data['email'])){
-				echo 3;
+				$arr['code'] = 0;
+				$arr['msg'] = "invalid email";
+				echo json_encode($arr);
 				return;
 			}
 			$model = new UserModel();
@@ -204,12 +206,22 @@ class IndexController extends \core\Starter
 				$_SESSION['uid'] = $res['uid'];
 				$_SESSION['nickname'] = $res['nick_name'];
 				$_SESSION['type'] = $res['type'];
-				echo 1;
+
+				$arr['code'] = 1;
+				$arr['msg'] = "Login Successfully!";
+				echo json_encode($arr);
+				return;
 			}else{
-				echo 2;	
+				$arr['code'] = 0;
+				$arr['msg'] = "password error, or the account is disabled now";
+				echo json_encode($arr);
+				return;	
 			}
 		}else{
-			echo 0;
+			$arr['code'] = 0;
+			$arr['msg'] = "captcha error";
+			echo json_encode($arr);
+			return;
 		}
 		//var_dump($data);
 		//var_dump($captcha);
